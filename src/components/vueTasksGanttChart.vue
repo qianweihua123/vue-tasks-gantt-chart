@@ -1,68 +1,113 @@
 <template>
-  <div class="vue-tasks-gantt-chart" ref="taskContainer" id="vue-tasks-gantt-chart">
+  <div
+    class="vue-tasks-gantt-chart"
+    ref="taskContainer"
+    id="vue-tasks-gantt-chart"
+  >
     <div class="taskContainer">
       <!-- 动态计算头部月份的长度 -->
       <div class="monthHeaderWidth">
-        <div class="monthSupport" :style="{
-          width: item.width + 'px',
-          left: item.left + 'px'
-        }" :key="index+''+onlySymbolVal()" v-for="(item, index) in monthList">
+        <div
+          class="monthSupport"
+          :style="{
+            width: item.width + 'px',
+            left: item.left + 'px'
+          }"
+          :key="index + '' + onlySymbolVal()"
+          v-for="(item, index) in monthList"
+        >
           {{ item.date }}
         </div>
       </div>
       <div class="cellGanttContainer">
-        <div class="gant_view_cell" v-for="(item, index) in dateList" :key="index+''+onlySymbolVal()"
-          :style="{ width: item.width + 'px' }">
+        <div
+          class="gant_view_cell"
+          v-for="(item, index) in dateList"
+          :key="index + '' + onlySymbolVal()"
+          :style="{ width: item.width + 'px' }"
+        >
           {{ item.date }}
         </div>
       </div>
       <!-- 外层的边框 -->
       <div style="position: relative" id="getHeight">
-        <div class="setTaskContainer" :key="index+''+onlySymbolVal()" v-for="(item, index) in taskArrayData">
-          <div v-for="(date, index) in dateList" :key="index+''+onlySymbolVal()" class="gant_view_cell"
-            :style="{ width: date.width + 'px' }"></div>
+        <div
+          class="setTaskContainer"
+          :key="index + '' + onlySymbolVal()"
+          v-for="(item, index) in taskArrayData"
+        >
+          <div
+            v-for="(date, index) in dateList"
+            :key="index + '' + onlySymbolVal()"
+            class="gant_view_cell"
+            :style="{ width: date.width + 'px' }"
+          ></div>
         </div>
-        <canvas id="myCanvas" style="position: absolute; top: 0;left:0"></canvas>
-        <div class="taskContainerCss" v-for="(task, inx) in taskArrayData" :key="inx+''+onlySymbolVal()"
-          @mousemove="e => showTaskInfor(e, task)" @mouseleave="hideTaskInfor" :style="{
+        <canvas
+          id="myCanvas"
+          style="position: absolute; top: 0;left:0"
+        ></canvas>
+        <div
+          class="taskContainerCss"
+          v-for="(task, inx) in taskArrayData"
+          :key="inx + '' + onlySymbolVal()"
+          @mousemove="e => showTaskInfor(e, task)"
+          @mouseleave="hideTaskInfor"
+          :style="{
             width: task.width + 'px',
             left: task.left + 'px',
             background: task.taskBackground ? task.taskBackground : '#ebeef5',
-            top: inx * 30 + 3 + 'px',
-          }">
-          <div class="processTaskCss" v-if="task.process" :style="{
-            width: task.processwidth + 'px',
-            background: task.precentBackground
-              ? task.precentBackground
-              : '#67c23a'
-          }" @mousemove="e => showTaskInfor(e, task)">
+            top: inx * 30 + 3 + 'px'
+          }"
+        >
+          <div
+            class="processTaskCss"
+            v-if="task.process"
+            :style="{
+              width: task.processwidth + 'px',
+              background: task.precentBackground
+                ? task.precentBackground
+                : '#67c23a'
+            }"
+            @mousemove="e => showTaskInfor(e, task)"
+          >
             <span style="padding-left: 10px">
-              <span :style="{
-                display: 'inline-block',
-                transform: task.showChildren
-                  ? 'rotate(90deg)'
-                  : 'rotate(0deg)'
-              }" @click="showChildTask(task, inx)" v-if="task.children && task.children.length">▶</span>
+              <span
+                :style="{
+                  display: 'inline-block',
+                  transform: task.showChildren
+                    ? 'rotate(90deg)'
+                    : 'rotate(0deg)'
+                }"
+                @click="showChildTask(task, inx)"
+                v-if="task.children && task.children.length"
+                >▶</span
+              >
               <span class="titleStyle">{{
-              task.taskMessage && task.taskMessage.title
-              ? task.taskMessage.title
-              : ""
+                task.taskMessage && task.taskMessage.title
+                  ? task.taskMessage.title
+                  : ""
               }}</span>
             </span>
             <span style="padding-right: 20px">{{ task.precentNumer }}</span>
           </div>
           <div v-else>
             <span style="padding-left: 10px">
-              <span @click="showChildTask(task, inx)" v-if="task.children && task.children.length" :style="{
-                display: 'inline-block',
-                transform: task.showChildren
-                  ? 'rotate(90deg)'
-                  : 'rotate(0deg)'
-              }">▶</span>
+              <span
+                @click="showChildTask(task, inx)"
+                v-if="task.children && task.children.length"
+                :style="{
+                  display: 'inline-block',
+                  transform: task.showChildren
+                    ? 'rotate(90deg)'
+                    : 'rotate(0deg)'
+                }"
+                >▶</span
+              >
               <span class="titleStyle">{{
-              task.taskMessage && task.taskMessage.title
-              ? task.taskMessage.title
-              : ""
+                task.taskMessage && task.taskMessage.title
+                  ? task.taskMessage.title
+                  : ""
               }}</span>
             </span>
           </div>
@@ -80,11 +125,11 @@ import { fullFormatYearMonthDate } from "../utils/FullFormatYearMonthDate.js";
 import { baseCalculate, getTimeFun } from "../utils/mathFun.js";
 import { onlySymbolVal } from "../utils/onlySymbolVal.js";
 export default {
-  name: 'vueTasksGanttChart',
+  name: "vueTasksGanttChart",
   props: {
     gantObject: {
       type: Object,
-      default: () => { }
+      default: () => {}
     }
   },
   data() {
@@ -140,6 +185,7 @@ export default {
       }
 
       this.$nextTick(() => {
+        //需要再 dom 改变后重新改变 canvas 画布的宽高
         this.initCanvas().then(res => {
           const { bl, ctx } = res;
           this.taskArrayData.forEach((item, index) => {
@@ -193,6 +239,12 @@ export default {
         });
       });
     },
+
+    /**
+    * @description 描述 hover展示
+    * @param {e, item}
+    * @returns {*}
+    */
     showTaskInfor(e, item) {
       let domDiv = document.getElementsByClassName("showTips")[0];
       var x = e.pageX;
@@ -203,13 +255,24 @@ export default {
       domDiv.style.padding = "10px";
       domDiv.style.left = x - 180 + "px";
       domDiv.style.top = y - 60 + "px";
-      domDiv.innerHTML = `<div style="text-align:center"><span style="display:inline-block">${item.taskMessage.title ? item.taskMessage.title : ''
-        }</span><div style="text-align:left">开始日期：${item.taskStartTime}</div><div  style="text-align:left">结束日期：${item.taskEndTime}</div></div>`;
+      domDiv.innerHTML = `<div style="text-align:center"><span style="display:inline-block">${
+        item.taskMessage.title ? item.taskMessage.title : ""
+      }</span><div style="text-align:left">开始日期：${
+        item.taskStartTime
+      }</div><div  style="text-align:left">结束日期：${
+        item.taskEndTime
+      }</div></div>`;
     },
     hideTaskInfor() {
       let domDiv = document.getElementsByClassName("showTips")[0];
       domDiv.style.display = "none";
     },
+
+    /**
+    * @description 描述 计算总时长
+    * @param {*}
+    * @returns {*}
+    */
     computedTotalMs() {
       let totalMs = 0;
       if (this.startDate && this.endDate) {
@@ -221,10 +284,12 @@ export default {
       }
       return totalMs;
     },
+
     /**
-     *
-     * @date 格式为yyyy-mm-dd的日期，
-     */
+    * @description 描述 获取后一位的时间，方便计算差额
+    * @param {date}
+    * @returns {*}
+    */
     getNextMonth(date) {
       let year = new Date(date).getFullYear();
       let month = new Date(date).getMonth() + 1;
@@ -233,7 +298,7 @@ export default {
     formatMsToDate(ms) {
       // 参数 毫秒数
       let addZero;
-      addZero = function (num) {
+      addZero = function(num) {
         if (parseInt(num) < 10) {
           num = "0" + num;
         }
@@ -264,10 +329,16 @@ export default {
         return "";
       }
     },
+
+    /**
+    * @description 描述 初始化月份
+    * @param {*}
+    * @returns {*}
+    */
     async initMonthFun() {
       let totalMs = this.computedTotalMs();
-      let initBaseMonth = this.startDate; // 初始化月份
-      for (let i = 0; i <= totalMs;) {
+      let initBaseMonth = this.startDate;
+      for (let i = 0; i <= totalMs; ) {
         let leftStartMs = new Date(initBaseMonth);
         let monthValue = formatMonth(leftStartMs);
         initBaseMonth = this.getNextMonth(initBaseMonth);
@@ -292,7 +363,7 @@ export default {
         this.initMonthLaterMilliseconds = i;
       }
       let widthComputed = 0;
-      this.monthList.forEach(function (month) {
+      this.monthList.forEach(function(month) {
         widthComputed += month.width;
       });
       this.widthComputed = widthComputed;
@@ -305,10 +376,16 @@ export default {
       }
       return totalMs;
     },
+
+    /**
+    * @description 描述 初始化日期函数
+    * @param {*} totalMs
+    * @returns {*}
+    */
     initDateNumFun(totalMs) {
       var list = [];
-      let initBaseDate = this.startDate; // 初始化月份
-      for (let i = 0; i <= totalMs;) {
+      let initBaseDate = this.startDate;
+      for (let i = 0; i <= totalMs; ) {
         let leftStartDateMs = initBaseDate;
         let dateNum = formatDate(new Date(leftStartDateMs));
         let formatYearMonthDate = fullFormatYearMonthDate(
@@ -346,6 +423,11 @@ export default {
       this.dateList = list;
     },
 
+    /**
+     * @description 描述 画布箭头函数
+     * @param {*}
+     * @returns {*}
+     */
     drawArrow(ctx, fromX, fromY, toX, toY) {
       let theta = 30;
       let headlen = 10;
@@ -373,6 +455,12 @@ export default {
       ctx.stroke();
       ctx.restore();
     },
+
+    /**
+     * @description 描述 初始化任务函数
+     * @param {*}
+     * @returns {*}
+     */
     initTaskFun() {
       this.taskArrayData = this.taskArrayData.map(v => {
         if (!v.taskStartTime || !v.taskEndTime) {
@@ -432,15 +520,15 @@ export default {
               ),
               processwidth: childTask.process
                 ? baseCalculate(
-                  new Date(
-                    new Date(childTask.process).getFullYear(),
-                    new Date(childTask.process).getMonth(),
-                    new Date(childTask.process).getDate() + 1
-                  ),
-                  new Date(childTask.taskStartTime),
-                  this.oneDayMs,
-                  "divied"
-                )
+                    new Date(
+                      new Date(childTask.process).getFullYear(),
+                      new Date(childTask.process).getMonth(),
+                      new Date(childTask.process).getDate() + 1
+                    ),
+                    new Date(childTask.taskStartTime),
+                    this.oneDayMs,
+                    "divied"
+                  )
                 : 0,
               ...childTask
             };
@@ -465,15 +553,15 @@ export default {
           ),
           processwidth: v.process
             ? baseCalculate(
-              new Date(
-                new Date(v.process).getFullYear(),
-                new Date(v.process).getMonth(),
-                new Date(v.process).getDate() + 1
-              ),
-              new Date(v.taskStartTime),
-              this.oneDayMs,
-              "divied"
-            )
+                new Date(
+                  new Date(v.process).getFullYear(),
+                  new Date(v.process).getMonth(),
+                  new Date(v.process).getDate() + 1
+                ),
+                new Date(v.taskStartTime),
+                this.oneDayMs,
+                "divied"
+              )
             : 0,
           showChildren: false,
           ...v
@@ -481,6 +569,12 @@ export default {
       });
       this.initCanvas();
     },
+
+    /**
+     * @description 描述 初始化画布
+     * @param {*}
+     * @returns {*}
+     */
     initCanvas() {
       return new Promise(resolve => {
         let getHeightDom = document.getElementById("getHeight");
@@ -501,6 +595,12 @@ export default {
         });
       });
     },
+
+    /**
+     * @description 描述 初始化 gantt
+     * @param {*}
+     * @returns {*}
+     */
     gantInitRender() {
       this.$nextTick(() => {
         let containerWidth = document.getElementById("vue-tasks-gantt-chart");
@@ -582,24 +682,24 @@ export default {
 
     .taskContainerCss {
       position: absolute;
-      line-Height: 24px;
+      line-height: 24px;
       cursor: pointer;
       color: #303133;
-      font-Size: 12px;
-      border-Radius: 100px;
+      font-size: 12px;
+      border-radius: 100px;
       overflow: hidden;
 
       .processTaskCss {
-        height: 24PX;
-        line-Height: 24px;
+        height: 24px;
+        line-height: 24px;
         cursor: pointer;
         color: #303133;
-        font-Size: 12px;
-        border-Radius: 100px;
-        z-Index: 9999999;
+        font-size: 12px;
+        border-radius: 100px;
+        z-index: 9999999;
         display: flex;
-        justify-Content: space-between;
-        overflow: hidden
+        justify-content: space-between;
+        overflow: hidden;
       }
 
       .titleStyle {

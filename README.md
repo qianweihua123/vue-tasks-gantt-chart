@@ -1,5 +1,7 @@
 # vue-tasks-gantt-chart
+
 ## 效果预览
+
 ![201666355568_.pic.jpg](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dd70932ca3364c96bd308752b9e84439~tplv-k3u1fbpfcp-watermark.image?)
 
 ## 插件安装
@@ -13,7 +15,8 @@ npm install vue-tasks-gantt-chart --save
 ```
 
 ## 插件使用
-  目前只支持传入日期的格式年份/月份/日期
+
+目前只支持传入日期的格式年份/月份/日期
 
 - 在项目的入口文件`main.js`中加入下述代码
 
@@ -143,23 +146,21 @@ export default {
 
 如示例代码所示，
 在 template 中使用后，配置一个对象 ganttObject
-startDate 定义的头部时间范围
-endDate 定义的头部时间范围
-taskArrayData: [ 任务数组
-{
-taskMessage: {
-title: "" 主任务名称
-},
-taskStartTime: "", 主任务开始的时间
-taskEndTime: "", 主任务结束的时间
-taskBackground: "", 主任务的背景色
-process: "",主任务支持进度条
-precentNumer: "80%", 主任务进度条可定义完成的数值
-precentBackground: "", 主任务进度条可定义背景色
-children: [] 支持显示子任务，内部参数同外部
-}
-]
 
+- startDate 定义的头部时间范围
+- endDate 定义的头部时间范围
+- taskArrayData: [ 任务数组
+  {
+  taskMessage: {
+  title: "" 主任务名称
+  },
+- taskStartTime: "", 主任务开始的时间
+- taskEndTime: "", 主任务结束的时间
+- taskBackground: "", 主任务的背景色
+- process: "",主任务支持进度条
+- precentNumer: "80%", 主任务进度条可定义完成的数值
+- precentBackground: "", 主任务进度条可定义背景色
+- children: [] 支持显示子任务，内部参数同外部
 
 ## 写在最后
 
