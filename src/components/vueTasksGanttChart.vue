@@ -263,8 +263,8 @@ export default {
      */
     showTaskInfor(e, item) {
       let domDiv = document.getElementsByClassName("showTips")[0];
-      var x = e.pageX;
-      var y = e.pageY;
+      let x = e.pageX;
+      let y = e.pageY;
       domDiv.style.display = "block";
       domDiv.style.zIndex = 99999;
       domDiv.style.color = "#454545";
@@ -321,7 +321,7 @@ export default {
         return num;
       };
       if (ms) {
-        var oDate = new Date(ms),
+        let oDate = new Date(ms),
           oYear = oDate.getFullYear(),
           oMonth = oDate.getMonth() + 1,
           oDay = oDate.getDate(),
@@ -358,13 +358,13 @@ export default {
         let leftStartMs = new Date(initBaseMonth);
         let monthValue = formatMonth(leftStartMs);
         initBaseMonth = this.getNextMonth(initBaseMonth);
-        var width = baseCalculate(
+        let width = baseCalculate(
           new Date(initBaseMonth),
           leftStartMs,
           this.oneDayMs,
           "divied"
         );
-        var left = baseCalculate(
+        let left = baseCalculate(
           leftStartMs,
           new Date(this.startDate),
           this.oneDayMs,
@@ -399,7 +399,7 @@ export default {
      * @returns {*}
      */
     initDateNumFun(totalMs) {
-      var list = [];
+      let list = [];
       let initBaseDate = this.startDate;
       for (let i = 0; i <= totalMs; ) {
         let leftStartDateMs = initBaseDate;
@@ -414,13 +414,13 @@ export default {
           new Date(initBaseDate).getDate() + 1
         );
 
-        var width = baseCalculate(
+        let width = baseCalculate(
           initBaseDate,
           new Date(leftStartDateMs),
           this.oneDayMs,
           "divied"
         );
-        var left = baseCalculate(
+        let left = baseCalculate(
           new Date(leftStartDateMs),
           new Date(this.startDate),
           this.oneDayMs,
@@ -456,7 +456,7 @@ export default {
       let botY = headlen * Math.sin(angle2);
       ctx.save();
       ctx.beginPath();
-      var arrowX, arrowY;
+      let arrowX, arrowY;
       ctx.moveTo(fromX, fromY);
       ctx.lineTo(toX, toY);
       arrowX = toX + topX;
@@ -594,7 +594,7 @@ export default {
     initCanvas() {
       return new Promise(resolve => {
         let getHeightDom = document.getElementById("getHeight");
-        var canvas = document.getElementById("myCanvas");
+        let canvas = document.getElementById("myCanvas");
         // 获取设备像素比
         const dpr = window.devicePixelRatio || 1;
         // 3540 4425 0.5 120 150 0.8
@@ -603,7 +603,7 @@ export default {
         canvas.width = Math.round(this.widthComputed * dpr);
         canvas.height = Math.round(getHeightDom.offsetHeight * dpr);
         let bl = Number(canvas.width) / Number(this.widthComputed);
-        var ctx = canvas.getContext("2d");
+        let ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         resolve({
           bl,
