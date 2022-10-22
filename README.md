@@ -26,7 +26,7 @@ import vueTasksGanttChart from "vue-tasks-gantt-chart";
 Vue.use(vueTasksGanttChart);
 ```
 
-- 在你的业务代码中，进行试验，然后传对应的参数即可.
+- 在你的业务代码中，进行试验，然后传对应的参数即可.如果数据加载时间比较长，在自己代码中配合loading 效果去渲染更合适
 
 ```vue
 <template>
