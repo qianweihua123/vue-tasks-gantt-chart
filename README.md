@@ -97,7 +97,7 @@ export default {
             },
             taskStartTime: "2022/1/5",
             taskEndTime: "2022/1/15",
-            taskBackground: "red",
+            taskBackground: "#409eff",
             children: [
               {
                 taskMessage: {
